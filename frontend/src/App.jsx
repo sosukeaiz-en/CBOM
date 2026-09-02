@@ -1,122 +1,127 @@
-import { useState } from 'react'
-import heroImg from './assets/hero.png'
-import reactLogo from './assets/react.svg'
-import viteLogo from './assets/vite.svg'
-import './App.css'
+import React from "react";
 
-function App() {
-  const [count, setCount] = useState(0)
-
+function Header() {
   return (
-    <>
-      <section id="center">
-        <div className="hero">
-          <img src={heroImg} className="base" width="170" height="179" alt="" />
-          <img src={reactLogo} className="framework" alt="React logo" />
-          <img src={viteLogo} className="vite" alt="Vite logo" />
-        </div>
+    <header className="bg-gray-900 border-b border-gray-700 px-6 py-4">
+      <div className="max-w-7xl mx-auto flex items-center justify-between">
         <div>
-          <h1>Get started</h1>
-          <p>
-            Edit <code>src/App.jsx</code> and save to test <code>HMR</code>
+          <h1 className="text-xl font-semibold text-white tracking-wide">
+            QuantumShield
+          </h1>
+          <p className="text-xs text-gray-400 mt-0.5">
+            Security Management Platform
           </p>
         </div>
-        <button
-          type="button"
-          className="counter"
-          onClick={() => setCount((count) => count + 1)}
-        >
-          Count is {count}
-        </button>
-      </section>
-
-      <div className="ticks"></div>
-
-      <section id="next-steps">
-        <div id="docs">
-          <svg className="icon" role="presentation" aria-hidden="true">
-            <use href="/icons.svg#documentation-icon"></use>
-          </svg>
-          <h2>Documentation</h2>
-          <p>Your questions, answered</p>
-          <ul>
-            <li>
-              <a href="https://vite.dev/" target="_blank">
-                <img className="logo" src={viteLogo} alt="" />
-                Explore Vite
-              </a>
-            </li>
-            <li>
-              <a href="https://react.dev/" target="_blank">
-                <img className="button-icon" src={reactLogo} alt="" />
-                Learn more
-              </a>
-            </li>
-          </ul>
-        </div>
-        <div id="social">
-          <svg className="icon" role="presentation" aria-hidden="true">
-            <use href="/icons.svg#social-icon"></use>
-          </svg>
-          <h2>Connect with us</h2>
-          <p>Join the Vite community</p>
-          <ul>
-            <li>
-              <a href="https://github.com/vitejs/vite" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#github-icon"></use>
-                </svg>
-                GitHub
-              </a>
-            </li>
-            <li>
-              <a href="https://chat.vite.dev/" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#discord-icon"></use>
-                </svg>
-                Discord
-              </a>
-            </li>
-            <li>
-              <a href="https://x.com/vite_js" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#x-icon"></use>
-                </svg>
-                X.com
-              </a>
-            </li>
-            <li>
-              <a href="https://bsky.app/profile/vite.dev" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#bluesky-icon"></use>
-                </svg>
-                Bluesky
-              </a>
-            </li>
-          </ul>
-        </div>
-      </section>
-
-      <div className="ticks"></div>
-      <section id="spacer"></section>
-    </>
-  )
+        <nav className="flex items-center gap-6">
+          <a
+            href="#"
+            className="text-sm text-gray-300 hover:text-white transition-colors"
+          >
+            Dashboard
+          </a>
+          <a
+            href="#"
+            className="text-sm text-gray-300 hover:text-white transition-colors"
+          >
+            Reports
+          </a>
+          <a
+            href="#"
+            className="text-sm text-gray-300 hover:text-white transition-colors"
+          >
+            Settings
+          </a>
+        </nav>
+      </div>
+    </header>
+  );
 }
 
-export default App
+function StatusBadge({ status }) {
+  const isOk = status === "ok";
+  return (
+    <span
+      className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-medium ${
+        isOk
+          ? "bg-green-900 text-green-300"
+          : "bg-red-900 text-red-300"
+      }`}
+    >
+      <span
+        className={`w-1.5 h-1.5 rounded-full ${
+          isOk ? "bg-green-400" : "bg-red-400"
+        }`}
+      />
+      {isOk ? "Operational" : "Degraded"}
+    </span>
+  );
+}
+
+function MainContent() {
+  return (
+    <main className="flex-1 max-w-7xl mx-auto w-full px-6 py-10">
+      <div className="mb-8">
+        <h2 className="text-2xl font-semibold text-white">Dashboard</h2>
+        <p className="text-gray-400 mt-1 text-sm">
+          System overview and status
+        </p>
+      </div>
+
+      <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-10">
+        <div className="bg-gray-800 border border-gray-700 rounded-lg p-5">
+          <p className="text-xs text-gray-400 uppercase tracking-widest mb-1">
+            API Status
+          </p>
+          <StatusBadge status="ok" />
+        </div>
+        <div className="bg-gray-800 border border-gray-700 rounded-lg p-5">
+          <p className="text-xs text-gray-400 uppercase tracking-widest mb-1">
+            Database
+          </p>
+          <StatusBadge status="pending" />
+        </div>
+        <div className="bg-gray-800 border border-gray-700 rounded-lg p-5">
+          <p className="text-xs text-gray-400 uppercase tracking-widest mb-1">
+            Active Sessions
+          </p>
+          <p className="text-2xl font-bold text-white mt-1">--</p>
+        </div>
+      </div>
+
+      <div className="bg-gray-800 border border-gray-700 rounded-lg p-6">
+        <h3 className="text-sm font-medium text-gray-300 mb-4">
+          Recent Activity
+        </h3>
+        <p className="text-sm text-gray-500 italic">
+          No activity to display yet. Connect MongoDB in Step 11 to populate
+          this section.
+        </p>
+      </div>
+    </main>
+  );
+}
+
+function Footer() {
+  return (
+    <footer className="border-t border-gray-700 px-6 py-4">
+      <div className="max-w-7xl mx-auto flex items-center justify-between">
+        <p className="text-xs text-gray-500">
+          QuantumShield &copy; {new Date().getFullYear()}
+        </p>
+        <p className="text-xs text-gray-600">Phase 1 &mdash; Foundation</p>
+      </div>
+    </footer>
+  );
+}
+
+function App() {
+  return (
+    <div className="min-h-screen bg-gray-950 text-white flex flex-col">
+      <Header />
+      <MainContent />
+      <Footer />
+    </div>
+  );
+}
+
+export default App;
