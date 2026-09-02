@@ -1,4 +1,18 @@
-// QuantumShield Backend — Entry Point
-// Step 3 will add the Express server here
+// QuantumShield Backend — Express Server
+const express = require("express");
 
-console.log("QuantumShield backend starting...");
+const app = express();
+const PORT = process.env.PORT || 5000;
+
+// Middleware
+app.use(express.json());
+
+// Root route
+app.get("/", (req, res) => {
+  res.json({ message: "QuantumShield API is running 🚀" });
+});
+
+// Start server
+app.listen(PORT, () => {
+  console.log(`✅ Server running on http://localhost:${PORT}`);
+});
