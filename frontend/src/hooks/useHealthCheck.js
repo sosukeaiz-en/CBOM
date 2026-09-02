@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 
 function useHealthCheck() {
   const [status, setStatus] = useState("loading");
+  const [database, setDatabase] = useState("loading");
   const [timestamp, setTimestamp] = useState(null);
   const [error, setError] = useState(null);
 
@@ -17,12 +18,14 @@ function useHealthCheck() {
         const data = await response.json();
         if (!cancelled) {
           setStatus(data.status);
+          setDatabase(data.database);
           setTimestamp(data.timestamp);
           setError(null);
         }
       } catch (err) {
         if (!cancelled) {
           setStatus("error");
+          setDatabase("error");
           setError(err.message);
         }
       }
@@ -35,7 +38,7 @@ function useHealthCheck() {
     };
   }, []);
 
-  return { status, timestamp, error };
+  return { status, database, timestamp, error };
 }
 
 export default useHealthCheck;

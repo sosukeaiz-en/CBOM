@@ -1,6 +1,8 @@
 // QuantumShield Backend -- Entry Point
-const express = require("express");
+require("dotenv").config();
 
+const express = require("express");
+const connectDB = require("./config/db");
 const healthRouter = require("./routes/health");
 
 const app = express();
@@ -17,7 +19,14 @@ app.get("/", (req, res) => {
   res.json({ message: "QuantumShield API is running." });
 });
 
-// Start server
-app.listen(PORT, () => {
-  console.log(`Server running on http://localhost:${PORT}`);
-});
+// Connect to database then start the server
+connectDB()
+  .then(() => {
+    app.listen(PORT, () => {
+      console.log(`Server running on http://localhost:${PORT}`);
+    });
+  })
+  .catch((err) => {
+    console.error("Database connection failed:", err.message);
+    process.exit(1);
+  });

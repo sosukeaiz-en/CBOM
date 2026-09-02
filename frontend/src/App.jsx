@@ -95,7 +95,7 @@ function ApiStatusCard({ status, timestamp, error }) {
 }
 
 function MainContent() {
-  const { status, timestamp, error } = useHealthCheck();
+  const { status, database, timestamp, error } = useHealthCheck();
 
   return (
     <main className="flex-1 max-w-7xl mx-auto w-full px-6 py-10">
@@ -113,7 +113,10 @@ function MainContent() {
           <p className="text-xs text-gray-400 uppercase tracking-widest mb-2">
             Database
           </p>
-          <StatusBadge status="pending" />
+          <StatusBadge status={database === "connected" ? "ok" : database === "loading" ? "loading" : "pending"} />
+          {database !== "loading" && (
+            <p className="text-xs text-gray-500 mt-2 capitalize">{database}</p>
+          )}
         </div>
 
         <div className="bg-gray-800 border border-gray-700 rounded-lg p-5">
