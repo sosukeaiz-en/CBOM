@@ -1,4 +1,5 @@
 import React from "react";
+import useHealthCheck from "./hooks/useHealthCheck";
 
 function Header() {
   return (
@@ -38,26 +39,64 @@ function Header() {
 }
 
 function StatusBadge({ status }) {
-  const isOk = status === "ok";
+  const variants = {
+    ok: "bg-green-900 text-green-300",
+    error: "bg-red-900 text-red-300",
+    loading: "bg-gray-700 text-gray-400",
+    pending: "bg-yellow-900 text-yellow-300",
+  };
+
+  const dotVariants = {
+    ok: "bg-green-400",
+    error: "bg-red-400",
+    loading: "bg-gray-400 animate-pulse",
+    pending: "bg-yellow-400",
+  };
+
+  const labels = {
+    ok: "Operational",
+    error: "Unreachable",
+    loading: "Checking...",
+    pending: "Pending",
+  };
+
+  const variant = variants[status] || variants.pending;
+  const dot = dotVariants[status] || dotVariants.pending;
+  const label = labels[status] || "Unknown";
+
   return (
     <span
-      className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-medium ${
-        isOk
-          ? "bg-green-900 text-green-300"
-          : "bg-red-900 text-red-300"
-      }`}
+      className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-medium ${variant}`}
     >
-      <span
-        className={`w-1.5 h-1.5 rounded-full ${
-          isOk ? "bg-green-400" : "bg-red-400"
-        }`}
-      />
-      {isOk ? "Operational" : "Degraded"}
+      <span className={`w-1.5 h-1.5 rounded-full ${dot}`} />
+      {label}
     </span>
   );
 }
 
+function ApiStatusCard({ status, timestamp, error }) {
+  return (
+    <div className="bg-gray-800 border border-gray-700 rounded-lg p-5">
+      <p className="text-xs text-gray-400 uppercase tracking-widest mb-2">
+        API Status
+      </p>
+      <StatusBadge status={status} />
+      {timestamp && (
+        <p className="text-xs text-gray-500 mt-2">
+          Last checked:{" "}
+          {new Date(timestamp).toLocaleTimeString()}
+        </p>
+      )}
+      {error && (
+        <p className="text-xs text-red-400 mt-2">Error: {error}</p>
+      )}
+    </div>
+  );
+}
+
 function MainContent() {
+  const { status, timestamp, error } = useHealthCheck();
+
   return (
     <main className="flex-1 max-w-7xl mx-auto w-full px-6 py-10">
       <div className="mb-8">
@@ -68,18 +107,15 @@ function MainContent() {
       </div>
 
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-10">
+        <ApiStatusCard status={status} timestamp={timestamp} error={error} />
+
         <div className="bg-gray-800 border border-gray-700 rounded-lg p-5">
-          <p className="text-xs text-gray-400 uppercase tracking-widest mb-1">
-            API Status
-          </p>
-          <StatusBadge status="ok" />
-        </div>
-        <div className="bg-gray-800 border border-gray-700 rounded-lg p-5">
-          <p className="text-xs text-gray-400 uppercase tracking-widest mb-1">
+          <p className="text-xs text-gray-400 uppercase tracking-widest mb-2">
             Database
           </p>
           <StatusBadge status="pending" />
         </div>
+
         <div className="bg-gray-800 border border-gray-700 rounded-lg p-5">
           <p className="text-xs text-gray-400 uppercase tracking-widest mb-1">
             Active Sessions
