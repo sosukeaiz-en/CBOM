@@ -1,0 +1,13 @@
+{
+  "name": "quantumshield-backend",
+  "version": "1.0.0",
+  "description": "QuantumShield backend API — Node.js + Express + MongoDB",
+  "main": "src/index.js",
+  "scripts": {
+    "start": "node src/index.js",
+    "dev": "nodemon src/index.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}
