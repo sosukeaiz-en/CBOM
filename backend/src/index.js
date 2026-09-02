@@ -1,4 +1,4 @@
-// QuantumShield Backend — Express Server
+// QuantumShield Backend -- Entry Point
 const express = require("express");
 
 const app = express();
@@ -9,10 +9,10 @@ app.use(express.json());
 
 // Root route
 app.get("/", (req, res) => {
-  res.json({ message: "QuantumShield API is running 🚀" });
+  res.json({ message: "QuantumShield API is running." });
 });
 
 // Start server
 app.listen(PORT, () => {
-  console.log(`✅ Server running on http://localhost:${PORT}`);
+  console.log(`Server running on http://localhost:${PORT}`);
 });
