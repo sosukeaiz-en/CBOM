@@ -1,25 +1,32 @@
 // QuantumShield Backend -- Entry Point
-require("dotenv").config();
+
+require("dotenv").config({
+  path: require("path").resolve(__dirname, "../.env"),
+});
 
 const express = require("express");
+const cors = require("cors");
 const connectDB = require("./config/db");
 const healthRouter = require("./routes/health");
+const phase4Routes = require("./routes/phase4");
 
 const app = express();
 const PORT = process.env.PORT || 5000;
 
-// Middleware
+console.log("MONGO_URI loaded:", !!process.env.MONGO_URI);
+
+app.use(cors());
 app.use(express.json());
 
-// Routes
 app.use("/api/health", healthRouter);
+app.use("/api/phase4", phase4Routes);
 
-// Root route
 app.get("/", (req, res) => {
-  res.json({ message: "QuantumShield API is running." });
+  res.json({
+    message: "QuantumShield API is running.",
+  });
 });
 
-// Connect to database then start the server
 connectDB()
   .then(() => {
     app.listen(PORT, () => {

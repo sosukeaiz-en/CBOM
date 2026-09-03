@@ -1,5 +1,6 @@
 import React from "react";
 import useHealthCheck from "./hooks/useHealthCheck";
+import Phase4Dashboard from "./components/Phase4Dashboard";
 
 function Header() {
   return (
@@ -9,10 +10,12 @@ function Header() {
           <h1 className="text-xl font-semibold text-white tracking-wide">
             QuantumShield
           </h1>
+
           <p className="text-xs text-gray-400 mt-0.5">
             Security Management Platform
           </p>
         </div>
+
         <nav className="flex items-center gap-6">
           <a
             href="#"
@@ -20,12 +23,14 @@ function Header() {
           >
             Dashboard
           </a>
+
           <a
             href="#"
             className="text-sm text-gray-300 hover:text-white transition-colors"
           >
             Reports
           </a>
+
           <a
             href="#"
             className="text-sm text-gray-300 hover:text-white transition-colors"
@@ -80,15 +85,20 @@ function ApiStatusCard({ status, timestamp, error }) {
       <p className="text-xs text-gray-400 uppercase tracking-widest mb-2">
         API Status
       </p>
+
       <StatusBadge status={status} />
+
       {timestamp && (
         <p className="text-xs text-gray-500 mt-2">
           Last checked:{" "}
           {new Date(timestamp).toLocaleTimeString()}
         </p>
       )}
+
       {error && (
-        <p className="text-xs text-red-400 mt-2">Error: {error}</p>
+        <p className="text-xs text-red-400 mt-2">
+          Error: {error}
+        </p>
       )}
     </div>
   );
@@ -99,23 +109,45 @@ function MainContent() {
 
   return (
     <main className="flex-1 max-w-7xl mx-auto w-full px-6 py-10">
+
+      {/* Existing Dashboard */}
       <div className="mb-8">
-        <h2 className="text-2xl font-semibold text-white">Dashboard</h2>
+        <h2 className="text-2xl font-semibold text-white">
+          Dashboard
+        </h2>
+
         <p className="text-gray-400 mt-1 text-sm">
           System overview and status
         </p>
       </div>
 
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-10">
-        <ApiStatusCard status={status} timestamp={timestamp} error={error} />
+
+        <ApiStatusCard
+          status={status}
+          timestamp={timestamp}
+          error={error}
+        />
 
         <div className="bg-gray-800 border border-gray-700 rounded-lg p-5">
           <p className="text-xs text-gray-400 uppercase tracking-widest mb-2">
             Database
           </p>
-          <StatusBadge status={database === "connected" ? "ok" : database === "loading" ? "loading" : "pending"} />
+
+          <StatusBadge
+            status={
+              database === "connected"
+                ? "ok"
+                : database === "loading"
+                ? "loading"
+                : "pending"
+            }
+          />
+
           {database !== "loading" && (
-            <p className="text-xs text-gray-500 mt-2 capitalize">{database}</p>
+            <p className="text-xs text-gray-500 mt-2 capitalize">
+              {database}
+            </p>
           )}
         </div>
 
@@ -123,19 +155,28 @@ function MainContent() {
           <p className="text-xs text-gray-400 uppercase tracking-widest mb-1">
             Active Sessions
           </p>
-          <p className="text-2xl font-bold text-white mt-1">--</p>
+
+          <p className="text-2xl font-bold text-white mt-1">
+            --
+          </p>
         </div>
       </div>
 
+      {/* Existing Recent Activity */}
       <div className="bg-gray-800 border border-gray-700 rounded-lg p-6">
         <h3 className="text-sm font-medium text-gray-300 mb-4">
           Recent Activity
         </h3>
+
         <p className="text-sm text-gray-500 italic">
-          No activity to display yet. Connect MongoDB in Step 11 to populate
-          this section.
+          No activity to display yet. Connect MongoDB in Step 11
+          to populate this section.
         </p>
       </div>
+
+      {/* Phase 4 Dashboard */}
+      <Phase4Dashboard />
+
     </main>
   );
 }
@@ -147,7 +188,10 @@ function Footer() {
         <p className="text-xs text-gray-500">
           QuantumShield &copy; {new Date().getFullYear()}
         </p>
-        <p className="text-xs text-gray-600">Phase 1 &mdash; Foundation</p>
+
+        <p className="text-xs text-gray-600">
+          Phase 4 &mdash; Quantum Risk Assessment
+        </p>
       </div>
     </footer>
   );
